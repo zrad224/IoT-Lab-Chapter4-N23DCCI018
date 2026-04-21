@@ -1,3 +1,4 @@
+import random
 class SimLED:
     def __init__(self, pin, name="LED"):
         self.pin = pin
@@ -14,7 +15,6 @@ class SimLED:
 
     def blink(self, on_time=1, off_time=1):
         print(f"[{self.name}] BLINK on={on_time}s off={off_time}s")
-import random
 
 class SimUltrasonic:
     def __init__(self, echo, trigger, base_distance=50.0):
@@ -29,7 +29,9 @@ class SimUltrasonic:
 
     def set_base(self, new_val):
         self.base_distance = max(2, min(400, new_val))
+
 class SimPotentiometer:
+
     def __init__(self, channel=0, initial_value=0.5):
         self._value = initial_value
 
