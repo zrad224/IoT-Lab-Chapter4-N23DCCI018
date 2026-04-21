@@ -1,0 +1,50 @@
+stages:
+  - lint
+  - test
+
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+
+cache:
+  paths:
+    - .cache/pip
+
+lint-bt1:
+  stage: lint
+  image: python:3.11
+  before_script:
+    - pip install flake8
+  script:
+    - echo "Kiểm tra BT1..."
+    - flake8 BT1_QEMU_SystemMonitor/ --max-line-length=120 --show-source
+  allow_failure: false
+
+lint-bt2:
+  stage: lint
+  image: python:3.11
+  before_script:
+    - pip install flake8
+  script:
+    - echo "Kiểm tra BT2..."
+    - flake8 BT2_QEMU_SensorSim/ --max-line-length=120 --show-source
+  allow_failure: false
+
+test-bt1:
+  stage: test
+  image: python:3.11
+  before_script:
+    - pip install psutil
+  script:
+    - echo "Test BT1..."
+    - python3 -c "import psutil; print('psutil OK')"
+  allow_failure: false
+
+test-bt2:
+  stage: test
+  image: python:3.11
+  before_script:
+    - pip install psutil matplotlib numpy
+  script:
+    - echo "Test BT2..."
+    - python3 -c "from BT2_QEMU_SensorSim.sensor_sim import SimLED, SimUltrasonic, SimPotentiometer; print('Import OK')"
+  allow_failure: false
